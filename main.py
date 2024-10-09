@@ -126,15 +126,16 @@ class ExtractionUtils:
         }
         self.save_path  = save_path
 
-    """def get_request(self):
-        logger.info("requesting.......")
-        response = requests.get(self.url, headers=self.headers)
-        response.raise_for_status()  
-        soup    = BeautifulSoup(response.text, "html.parser")
-        logger.info("completed")
-        return soup"""
+
     
-    def get_request(self):
+    def get_request(self) -> BeautifulSoup or None:
+        """
+        Send a GET request to the specified URL and return the parsed HTML content using BeautifulSoup.
+
+        Returns:
+            BeautifulSoup : The parsed HTML content of the page, or
+            None          : If the request fails or times out.
+        """
         logger.info("Requesting....")
         try:
             response = requests.get(self.url, headers=self.headers, timeout=15)
@@ -153,7 +154,7 @@ class ExtractionUtils:
             return None
 
     
-    def clean_and_extract_text(self,soup):
+    def clean_and_extract_text(self,soup: BeautifulSoup) -> str or None:
         """Remove unwanted tags and extract text from paragraph (<p>) tags.
 
         Returns:
@@ -173,7 +174,7 @@ class ExtractionUtils:
         logger.warning("No soup object available for text extraction.")
         return None
     
-    def save_text_to_file(self, text: str):
+    def save_text_to_file(self, text: str) -> None:
         """Save the extracted text to a specified output file.
 
         Args:
